@@ -1,0 +1,74 @@
+CREATE DATABASE threedpw;
+USE threedpw;
+
+CREATE TABLE USUARIO(
+id_user int(2) UNIQUE,
+username varchar(10),
+pass_word varchar(8),
+name_u varchar(40),
+email varchar(30),
+phone varchar(11)
+);
+
+CREATE TABLE PRINTER(
+id_printer int(2) UNIQUE,
+iduser int(2),
+name_p varchar(20),
+iprouter varchar(12),
+iplocal varchar(12),
+manufacturer varchar(20),
+model varchar(20),
+firmware varchar(20),
+diameter int(4),
+nozzle int(4)
+);
+
+CREATE TABLE VOLUME(
+id_volume int(2),
+x int(2),
+y int(2),
+z int(2)
+);
+
+CREATE TABLE PERFIL(
+id_profile int(2) UNIQUE,
+idprinter int(2),
+name_o varchar(20),
+height int(1),
+wall int(1),
+tempext int(3),
+tempbed int(3),
+speed int(3),
+cooling int(1),
+support int(1),
+brim int(1)
+);
+
+INSERT INTO USUARIO VALUES
+('01','mfragoso','senhaa','Michael Fragoso','mfragoso@mit.edu','1111111111'),
+('02','peterp','senhab','Peter Parker','peterp@nyu.edu','2222222222');
+
+INSERT INTO PRINTER VALUES
+('01','01','Prusa','11111111111','33333333333','Prusa','MK','Marlin','1750','400'),
+('02','01','Maker','11111111111','44444444444','MakerBot','Replicator','Repetier','1750','400'),
+('03','02','Creality','22222222222','55555555555','Creality','CR10','CURA','1750','400');
+
+INSERT INTO VOLUME VALUES
+('01','21','21','25'),
+('02','30','20','15'),
+('01','30','30','40');
+
+INSERT INTO PERFIL VALUES
+('01','01','mini','1','1','200','60','100','0','1','1'),
+('02','01','box','3','3','230','70','150','1','0','1'),
+('03','01','figure','2','2','215','65','125','1','1','1'),
+('04','02','vase','3','2','240','55','150','1','0','0'),
+('05','02','piece','1','2','220','50','120','0','0','1'),
+('06','03','image','3','1','205','75','140','0','0','0')
+;
+
+SELECT name_p, name_u, email FROM USUARIO INNER JOIN PRINTER ON id_user = iduser;
+
+SELECT COUNT(id_profile) AS "Número de perfis por impressora" FROM PERFIL GROUP BY idprinter; 
+
+SELECT name_p, firmware, model FROM PRINTER;
